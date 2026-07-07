@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-
+
+scalable=no">
+    <title>Позитивный тест</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            min-height: 100%;
+            min-height: 100dvh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 2s ease;
+            overflow-x: hidden;
+            padding: 10px;
+        }
+
+        .bg-start { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .bg-cloudy { background: linear-gradient(135deg, #89a0c2 0%, #6c7ba0 50%, #8e7baf 100%); }
+        .bg-clearing { background: linear-gradient(135deg, #a8c0d8 0%, #7db4d8 50%, #b49fcc 100%); }
+        .bg-warm { background: linear-gradient(135deg, #f5c76e 0%, #e8a87c 50%, #d4a0c0 100%); }
+        .bg-bright { background: linear-gradient(135deg, #f093fb 0%, #f5576c 50%, #ffd86f 100%); }
+        .bg-golden { background: linear-gradient(135deg, #ffd86f 0%, #fc6076 30%, #ff9a44 70%, 
+
+#ef9d43 100%); }
+        .bg-sunset { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .bg-final { background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 50%, #ffd86f 100%); }
+
+        .container {
+            width: 100%;
+            max-width: 620px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 35px 32px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardAppear 0.8s ease forwards;
+            min-height: 200px;
+        }
+
+        @keyframes cardAppear {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInSoft {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes breathe {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.02); }
+        }
+        @keyframes breatheCircle {
+            0%, 100% { transform: scale(0.8); opacity: 0.7; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        /* Цветные иконки */
+        .i-sun { color: #f5a623; }
+        .i-star { color: #f5c518; }
+        .i-heart { color: #e74c6f; }
+        .i-tree { color: #4caf50; }
+        .i-leaf { color: #66bb6a; }
+        .i-water { color: #42a5f5; }
+        .i-fire { color: #ff7043; }
+        .i-cloud { color: #90a4ae; }
+        .i-moon { color: #7e57c2; }
+        .i-diamond { color: #29b6f6; }
+        .i-anchor { color: #5c6bc0; }
+        .i-music { color: #ab47bc; }
+        .i-cup { color: #8d6e63; }
+        .i-smile { color: #fdd835; }
+        .i-compass { color: #ef6c00; }
+        .i-key { color: #ffc107; }
+        .i-shield { color: #78909c; }
+        .i-lantern { color: #ffb74d; }
+        .i-spark { color: #fff176; }
+        .i-home { color: #a1887f; }
+        .i-clock { color: #90a4ae; }
+        .i-arrow { color: #66bb6a; }
+        .i-hand { color: #ffb74d; }
+        .i-gear { color: #90a4ae; }
+        .i-mountain { color: #78909c; }
+        .i-flag { color: #ef5350; }
+
+        .icon {
+            font-style: normal;
+            font-size: 1.1em;
+        }
+
+        .icon-big {
+            font-style: normal;
+            font-size: 3em;
+            display: block;
+            text-align: center;
+            margin-bottom: 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .icon-intro {
+            font-style: normal;
+            font-size: 3em;
+            display: block;
+            text-align: center;
+            margin-bottom: 20px;
+            animation: breathe 4s ease-in-out infinite;
+        }
+
+        /* Путь-прогресс */
+        .journey-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .journey-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            transition: all 0.6s ease;
+        }
+        .journey-dot.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.5);
+            transform: scale(1.2);
+        }
+        .journey-dot.completed {
+            background: linear-gradient(135deg, #ffd86f, #f5576c);
+        }
+        .journey-line {
+            height: 3px;
+            width: 22px;
+            background: #e0e0e0;
+            transition: background 0.6s ease;
+        }
+        .journey-line.completed {
+            background: linear-gradient(90deg, #ffd86f, #f5576c);
+        }
+
+        /* Рефлексия */
+        .reflection {
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+            border-left: 4px solid #667eea;
+            border-radius: 0 12px 12px 0;
+            padding: 18px 20px;
+            margin-bottom: 16px;
+            font-size: 0.93em;
+            line-height: 1.7;
+            color: #555;
+            font-style: italic;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+        .reflection.warm {
+            background: linear-gradient(135deg, #fff9f0 0%, #fff3e0 100%);
+            border-left-color: #f5a623;
+        }
+        .reflection.bright {
+            background: linear-gradient(135deg, #fff0f5 0%, #ffe0eb 100%);
+            border-left-color: #f5576c;
+        }
+        .reflection.golden {
+            background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%);
+            border-left-color: #ffd86f;
+        }
+
+        .step-label {
+            font-size: 0.75em;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #999;
+            margin-bottom: 6px;
+            opacity: 0;
+            animation: fadeIn 0.6s ease 0.2s forwards;
+        }
+
+        .question-title {
+            color: #333;
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 22px;
+            font-weight: 500;
+            opacity: 0;
+            animation: fadeIn 0.8s ease 0.4s forwards;
+        }
+
+        .answer-btn {
+            display: block;
+            width: 100%;
+            padding: 14px 18px;
+            margin: 9px 0;
+            border: 2px solid #e8e8e8;
+            border-radius: 14px;
+            background: white;
+            color: #444;
+            font-size: 0.95em;
+            line-height: 1.45;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.4s ease;
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
+        .answer-btn:nth-child(1) { animation-delay: 0.5s; }
+        .answer-btn:nth-child(2) { animation-delay: 0.63s; }
+        .answer-btn:nth-child(3) { animation-delay: 0.76s; }
+        .answer-btn:nth-child(4) { animation-delay: 0.89s; }
+
+        .answer-btn:hover {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+            transform: translateX(6px);
+            box-shadow: 0 3px 12px rgba(102, 126, 234, 0.15);
+        }
+        .answer-btn:active {
+            transform: translateX(3px) scale(0.98);
+        }
+
+        .continue-area {
+            text-align: center;
+            margin-top: 20px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .continue-btn {
+            display: inline-block;
+            padding: 14px 36px;
+            border: 2px solid #667eea;
+            border-radius: 14px;
+            background: white;
+            color: #667eea;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            opacity: 0;
+            animation: fadeInSoft 1s ease forwards;
+        }
+        .continue-btn:hover {
+            background: #667eea;
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .result-emoji {
+            font-size: 3em;
+            text-align: center;
+            margin: 5px 0 15px;
+            animation: float 3s ease-in-out infinite;
+        }
+        .result-title {
+            text-align: center;
+            font-size: 1.35em;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 600;
+            opacity: 0;
+            animation: fadeIn 0.8s ease 0.5s forwards;
+        }
+        .result-text {
+            line-height: 1.8;
+            color: #444;
+            font-size: 0.98em;
+            margin-bottom: 12px;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+        .result-tip {
+            background: linear-gradient(135deg, #fffde7 0%, #fff9c4 100%);
+            border-radius: 14px;
+            padding: 18px 20px;
+            margin-top: 16px;
+            line-height: 1.7;
+            font-size: 0.93em;
+            opacity: 0;
+            animation: fadeIn 0.8s ease 1.1s forwards;
+        }
+        .result-tip-title {
+            font-weight: 600;
+            color: #f5a623;
+            margin-bottom: 6px;
+        }
+        .journey-summary {
+            background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 100%);
+            border-radius: 14px;
+            padding: 18px 20px;
+            margin-top: 16px;
+            line-height: 1.7;
+            font-size: 0.85em;
+            color: #666;
+            opacity: 0;
+            animation: fadeIn 0.8s ease 1.4s forwards;
+        }
+        .journey-summary-title {
+            font-weight: 600;
+            color: #667eea;
+            margin-bottom: 6px;
+        }
+        .restart-btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 1.05em;
+            cursor: pointer;
+            transition: all 0.3s;
+            opacity: 0;
+            animation: fadeIn 0.8s ease 1.7s forwards;
+        }
+        .restart-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .intro-title {
+            text-align: center;
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        .intro-text {
+            text-align: center;
+            color: #666;
+            line-height: 1.75;
+            margin-bottom: 25px;
+            font-size: 0.98em;
+        }
+        .start-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        .start-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            animation: none;
+        }
+
+        .breathe-circle {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a18cd1, #fbc2eb);
+            margin: 25px auto;
+            animation: breatheCircle 6s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.85em;
+            letter-spacing: 3px;
+        }
+
+        .read-slow {
+            text-align: center;
+            color: #bbb;
+            font-size: 0.8em;
+            margin-top: 12px;
+            letter-spacing: 4px;
+        }
+
+        /* Мобильная адаптация */
+        @media (max-width: 480px) {
+            body { padding: 6px; }
+            .card { padding: 24px 18px; border-radius: 18px; }
+            .question-title { font-size: 1.05em; margin-bottom: 16px; }
+            .answer-btn { padding: 12px 14px; font-size: 0.9em; margin: 7px 0; border-radius: 12px; }
+            .journey-line { width: 14px; }
+            .journey-dot { width: 10px; height: 10px; }
+            .icon-big { font-size: 2.5em; }
+            .icon-intro { font-size: 2.5em; }
+            .reflection { padding: 14px 16px; font-size: 0.88em; }
+            .step-label { font-size: 0.7em; }
+            .intro-title { font-size: 1.3em; }
+            .intro-text { font-size: 0.9em; }
+            .result-emoji { font-size: 2.5em; }
+            .result-title { font-size: 1.2em; }
+            .result-text { font-size: 0.9em; }
+            .result-tip { padding: 14px 16px; font-size: 0.88em; }
+            .journey-summary { padding: 14px 16px; font-size: 0.82em; }
+            .continue-btn { padding: 12px 30px; font-size: 0.9em; }
+            .breathe-circle { width: 95px; height: 95px; font-size: 0.8em; }
+            .journey-bar { margin-bottom: 18px; }
+        }
+
+        @media (max-width: 360px) {
+            .card { padding: 20px 14px; }
+            .question-title { font-size: 0.98em; }
+            .answer-btn { padding: 10px 12px; font-size: 0.85em; }
+        }
+    </style>
+</head>
+<body class="bg-start">
+    <div class="container">
+        <div class="card" id="card">
+            <div id="content"></div>
+        </div>
+    </div>
+
+<script>
+
+// ========================================
+// ЦВЕТНЫЕ ИКОНКИ — ФУНКЦИЯ
+// ========================================
+
+function ic(symbol, colorClass) {
+    return '<i class="icon ' + colorClass + '">' + symbol + '</i>';
+}
+
+function icBig(symbol, colorClass) {
+    return '<i class="icon-big ' + colorClass + '">' + symbol + '</i>';
+}
+
+function icIntro(symbol, colorClass) {
+    return '<i class="icon-intro ' + colorClass + '">' + symbol + '</i>';
+}
+
+// ========================================
+// СОСТОЯНИЕ
+// ========================================
+
+var state = {
+    step: 0,
+    totalSteps: 7,
+    path: [],
+    moodStart: '',
+    resource: '',
+    place: '',
+    symbol: '',
+    horizon: '',
+    feeling: '',
+    strength: ''
+};
+
+// ========================================
+// БАЗА ДАННЫХ
+// ========================================
+
+var testFlow = {
+
+    "intro": {
+        type: "intro",
+        emoji: icIntro("&#9728;", "i-sun"),
+        title: "Позитивный тест",
+        subtitle: "Короткое путешествие к хорошему настроению",
+        text: "Здесь нет правильных и неправильных ответов. "
+            + "Есть только честные ответы "
+            + "&#8212; и каждый из них ведёт к чему-то хорошему."
+            + "<br><br>"
+            + "Стоит выделить 5 минут тишины. "
+            + "Не торопиться. Читать вдумчиво. "
+            + "Позволить себе прочувствовать каждый шаг.",
+        buttonText: "&#10148; Начать путешествие",
+        next: "q1"
+    },
+
+    "q1": {
+        type: "question",
+        step: 1,
+        label: "ОТПРАВНАЯ ТОЧКА",
+        bg: "bg-cloudy",
+        question: "Если представить внутренний мир прямо сейчас "
+                + "как пейзаж за окном &#8212; что за окном?",
+        answers: [
+            {
+                text: ic("&#9729;","i-cloud") + " Густой туман &#8212; не видно ни дороги, ни 
+
+горизонта",
+                next: "t1_fog",
+                save: { moodStart: "fog" }
+            },
+            {
+                text: ic("&#9729;","i-cloud") + " Серые облака &#8212; спокойно, но солнца не 
+
+хватает",
+                next: "t1_clouds",
+                save: { moodStart: "clouds" }
+            },
+            {
+                text: ic("&#9925;","i-sun") + " Облака с просветами &#8212; солнце иногда 
+
+пробивается",
+                next: "t1_partial",
+                save: { moodStart: "partial" }
+            },
+            {
+                text: ic("&#9728;","i-sun") + " Почти ясно &#8212; хорошо, но хочется ещё ярче",
+                next: "t1_clear",
+                save: { moodStart: "clear" }
+            }
+        ]
+    },
+
+    "t1_fog": {
+        type: "transition",
+        emoji: icBig("&#9832;","i-fire"),
+        bg: "bg-cloudy",
+        text: "Туман &#8212; это не темнота. "
+            + "Это мир, который пока не раскрыл свои детали. "
+            + "В тумане есть своя тишина и даже красота. "
+            + "А главное &#8212; туман всегда рассеивается. Всегда."
+            + "<br><br>"
+            + "Пора найти первый огонёк.",
+        pause: 4000,
+        next: "q2_low"
+    },
+
+    "t1_clouds": {
+        type: "transition",
+        emoji: icBig("&#9729;","i-cloud"),
+        bg: "bg-cloudy",
+        text: "За серыми облаками всегда есть солнце "
+            + "&#8212; оно никуда не исчезло. "
+            + "Просто нужен лёгкий ветер, "
+            + "чтобы облака начали двигаться."
+            + "<br><br>"
+            + "Этим ветром станут следующие несколько минут.",
+        pause: 3500,
+        next: "q2_mid"
+    },
+
+    "t1_partial": {
+        type: "transition",
+        emoji: icBig("&#9925;","i-sun"),
+        bg: "bg-clearing",
+        text: "Просветы в облаках &#8212; отличный старт! "
+            + "Внутри уже есть энергия, которая пробивается наружу. "
+            + "Осталось помочь ей раскрыться полностью.",
+        pause: 3000,
+        next: "q2_high"
+    },
+
+    "t1_clear": {
+        type: "transition",
+        emoji: icBig("&#10024;","i-star"),
+        bg: "bg-warm",
+        text: "Почти ясно &#8212; прекрасная точка старта! "
+            + "Ресурс уже есть внутри. "
+            + "Время превратить хорошее настроение в сияющее.",
+        pause: 2500,
+        next: "q2_top"
+    },
+
+    // ===== ВОПРОС 2 =====
+
+    "q2_low": {
+        type: "question",
+        step: 2,
+        label: "ПОИСК ОГОНЬКА",
+        bg: "bg-cloudy",
+        question: "В тумане главное &#8212; найти первый ориентир. "
+                + "Что-то маленькое, но тёплое. "
+                + "Какое простое действие "
+                + "в последнее время приносило хотя бы "
+                + "каплю удовольствия или спокойствия?",
+        answers: [
+            {
+                text: ic("&#9749;","i-cup") + " Что-то телесное &#8212; горячий чай, тёплый душ, 
+
+вкусная еда",
+                next: "t2_body", save: { resource: "body" }
+            },
+            {
+                text: ic("&#9835;","i-music") + " Что-то для чувств &#8212; музыка, тишина, красивый 
+
+вид",
+                next: "t2_senses", save: { resource: "senses" }
+            },
+            {
+                text: ic("&#9786;","i-smile") + " Общение &#8212; даже короткий разговор с близким 
+
+человеком",
+                next: "t2_people", save: { resource: "people" }
+            },
+            {
+                text: ic("&#9733;","i-star") + " Движение &#8212; прогулка, смена обстановки, свежий 
+
+воздух",
+                next: "t2_move", save: { resource: "move" }
+            }
+        ]
+    },
+
+    "q2_mid": {
+        type: "question",
+        step: 2,
+        label: "ТОЧКА ТЕПЛА",
+        bg: "bg-cloudy",
+        question: "Даже когда на душе пасмурно, "
+                + "где-то внутри всегда теплится огонёк. "
+                + "Если переключить внимание с мыслей на тело &#8212; "
+                + "где прямо сейчас ощущается "
+                + "наибольший комфорт или покой?",
+        answers: [
+            {
+                text: ic("&#9758;","i-hand") + " В руках или ногах &#8212; приятное тепло или 
+
+тяжесть",
+                next: "t2_body", save: { resource: "body" }
+            },
+            {
+                text: ic("&#9776;","i-water") + " В дыхании &#8212; дышится ровно, это островок 
+
+покоя",
+                next: "t2_senses", save: { resource: "senses" }
+            },
+            {
+                text: ic("&#9734;","i-moon") + " В лице &#8212; когда мышцы расслабляются, становится 
+
+легче",
+                next: "t2_people", save: { resource: "people" }
+            },
+            {
+                text: ic("&#9881;","i-gear") + " Пока нигде &#8212; всё внимание в мыслях",
+                next: "t2_move", save: { resource: "move" }
+            }
+        ]
+    },
+
+    "q2_high": {
+        type: "question",
+        step: 2,
+        label: "ИСКРА",
+        bg: "bg-clearing",
+        question: "Для полного солнца иногда достаточно "
+                + "одного маленького импульса &#8212; "
+                + "как спичка, от которой разгорается костёр. "
+                + "Что могло бы стать такой спичкой?",
+        answers: [
+            {
+                text: ic("&#9733;","i-star") + " Узнать что-то новое и захватывающее",
+                next: "t2_senses", save: { resource: "senses" }
+            },
+            {
+                text: ic("&#9829;","i-heart") + " Сделать что-то приятное лично для себя",
+                next: "t2_body", save: { resource: "body" }
+            },
+            {
+                text: ic("&#9786;","i-smile") + " Услышать голос или весточку от дорогого человека",
+                next: "t2_people", save: { resource: "people" }
+            },
+            {
+                text: ic("&#9650;","i-arrow") + " Почувствовать прогресс &#8212; движение вперёд",
+                next: "t2_move", save: { resource: "move" }
+            }
+        ]
+    },
+
+    "q2_top": {
+        type: "question",
+        step: 2,
+        label: "УСИЛЕНИЕ СВЕТА",
+        bg: "bg-warm",
+        question: "Когда настроение уже хорошее, "
+                + "его можно сделать великолепным. "
+                + "Что прямо сейчас вызывает "
+                + "внутреннюю улыбку &#8212; даже маленькую?",
+        answers: [
+            {
+                text: ic("&#9733;","i-star") + " Проект или идея, которая увлекает",
+                next: "t2_senses", save: { resource: "senses" }
+            },
+            {
+                text: ic("&#9829;","i-heart") + " Люди рядом, которые дороги",
+                next: "t2_people", save: { resource: "people" }
+            },
+            {
+                text: ic("&#9728;","i-sun") + " Ощущение свободы и открытых возможностей",
+                next: "t2_move", save: { resource: "move" }
+            },
+            {
+                text: ic("&#9752;","i-leaf") + " Просто факт, что прямо сейчас &#8212; всё хорошо",
+                next: "t2_body", save: { resource: "body" }
+            }
+        ]
+    },
+
+    // ===== ПЕРЕХОДЫ ПОСЛЕ ВОПРОСА 2 =====
+
+    "t2_body": {
+        type: "transition",
+        emoji: icBig("&#9832;","i-fire"),
+        bg: "bg-clearing",
+        text: "Тело &#8212; самый надёжный союзник. "
+            + "Оно не умеет обманывать: если ему тепло и хорошо, "
+            + "значит, внутри действительно есть ресурс. "
+            + "Внимание только что было направлено к этому ресурсу "
+            + "&#8212; и он откликнулся."
+            + "<br><br>"
+            + "Это тепло станет ориентиром на пути вперёд.",
+        pause: 4000,
+        next: "q3_place"
+    },
+
+    "t2_senses": {
+        type: "transition",
+        emoji: icBig("&#9835;","i-music"),
+        bg: "bg-clearing",
+        text: "Способность замечать тонкие вещи "
+            + "&#8212; звуки, запахи, красоту &#8212; "
+            + "это не просто чувствительность. Это дар. "
+            + "Те, кто умеет видеть красоту в мелочах, "
+            + "имеют встроенный генератор радости."
+            + "<br><br>"
+            + "Эта способность сейчас очень пригодится.",
+        pause: 4000,
+        next: "q3_place"
+    },
+
+    "t2_people": {
+        type: "transition",
+        emoji: icBig("&#9829;","i-heart"),
+        bg: "bg-clearing",
+        text: "Связь с людьми &#8212; одна из главных ценностей. "
+            + "Если отношения и общение важны &#8212; "
+            + "это говорит о глубине и теплоте натуры. "
+            + "Умение дарить и принимать тепло &#8212; редкое качество."
+            + "<br><br>"
+            + "Оно станет опорой на следующем шаге.",
+        pause: 4000,
+        next: "q3_place"
+    },
+
+    "t2_move": {
+        type: "transition",
+        emoji: icBig("&#9733;","i-star"),
+        bg: "bg-clearing",
+        text: "Движение и перемены &#8212; мощный способ перезагрузки. "
+            + "Пока другие застывают в трудные моменты, "
+            + "кто-то ищет выход в действии. "
+            + "Это качество первопроходца."
+            + "<br><br>"
+            + "Пора направить эту энергию в путешествие внутрь.",
+        pause: 4000,
+        next: "q3_place"
+    },
+
+    // ===== ВОПРОС 3 =====
+
+    "q3_place": {
+        type: "question",
+        step: 3,
+        label: "МЕСТО СИЛЫ",
+        bg: "bg-warm",
+        question: "Если бы можно было мгновенно оказаться в месте, "
+                + "где абсолютно хорошо &#8212; "
+                + "без забот, без чужих ожиданий &#8212; "
+                + "что бы это было за место?",
+        answers: [
+            {
+                text: ic("&#9968;","i-mountain") + " Природный простор &#8212; горы, лес, берег реки, 
+
+звёздное небо",
+                next: "t3_nature", save: { place: "nature" }
+            },
+            {
+                text: ic("&#9962;","i-home") + " Уютное укрытие &#8212; тёплый дом, мягкий свет, 
+
+тишина",
+                next: "t3_home", save: { place: "home" }
+            },
+            {
+                text: ic("&#9733;","i-star") + " Живой город &#8212; кофейня, вечерние огни, запах 
+
+выпечки",
+                next: "t3_city", save: { place: "city" }
+            },
+            {
+                text: ic("&#9200;","i-clock") + " Место из памяти &#8212; бабушкин дом, двор 
+
+детства",
+                next: "t3_memory", save: { place: "memory" }
+            }
+        ]
+    },
+
+    "t3_nature": {
+        type: "transition",
+        emoji: icBig("&#9752;","i-tree"),
+        bg: "bg-warm",
+        text: "Можно на секунду прикрыть глаза и представить: "
+            + "тёплая поляна. Солнечный свет сквозь листву "
+            + "мягко ложится на кожу. "
+            + "Воздух пахнет травами. "
+            + "Где-то журчит ручей."
+            + "<br><br>"
+            + "Ни одного уведомления. Только этот момент.",
+        pause: 5000,
+        next: "q4_symbol"
+    },
+
+    "t3_home": {
+        type: "transition",
+        emoji: icBig("&#9832;","i-fire"),
+        bg: "bg-warm",
+        text: "За окном вечер, "
+            + "а в комнате &#8212; мягкий тёплый свет. "
+            + "Что-то уютное укутывает плечи. "
+            + "Тихая музыка или потрескивание огня. "
+            + "Горячий напиток согревает ладони."
+            + "<br><br>"
+            + "Всё срочное стало несрочным. Весь мир подождёт.",
+        pause: 5000,
+        next: "q4_symbol"
+    },
+
+    "t3_city": {
+        type: "transition",
+        emoji: icBig("&#9733;","i-star"),
+        bg: "bg-warm",
+        text: "Вечерний город. Маленькая кофейня. За стеклом "
+            + "&#8212; мягкие огни фонарей. "
+            + "Прохожие куда-то идут, но спешить некуда. "
+            + "Аромат кофе, негромкий джаз."
+            + "<br><br>"
+            + "Просто быть наблюдателем. Быть в моменте.",
+        pause: 5000,
+        next: "q4_symbol"
+    },
+
+    "t3_memory": {
+        type: "transition",
+        emoji: icBig("&#9734;","i-moon"),
+        bg: "bg-warm",
+        text: "Это место живёт внутри &#8212; "
+            + "тёплое, настоящее, защищённое. "
+            + "Может, там пахнет пирогами. "
+            + "Или слышен смех друзей. "
+            + "Или ощущается та безмятежность, "
+            + "когда мир казался безопасным и добрым."
+            + "<br><br>"
+            + "Это ощущение никуда не делось. Оно здесь.",
+        pause: 5000,
+        next: "q4_symbol"
+    },
+
+    // ===== ВОПРОС 4 =====
+
+    "q4_symbol": {
+        type: "question",
+        step: 4,
+        label: "НАХОДКА",
+        bg: "bg-bright",
+        question: "В этом прекрасном месте "
+                + "взгляд падает на предмет. "
+                + "Он символизирует главную внутреннюю силу &#8212; "
+                + "качество, которое помогало "
+                + "преодолевать трудности на протяжении всей жизни. "
+                + "Что это?",
+        answers: [
+            {
+                text: ic("&#9737;","i-compass") + " Старинный компас &#8212; умение находить верный 
+
+путь даже в тумане",
+                next: "t4_compass", save: { symbol: "compass" }
+            },
+            {
+                text: ic("&#9758;","i-key") + " Золотой ключ &#8212; способность открывать двери, 
+
+которые кажутся закрытыми",
+                next: "t4_key", save: { symbol: "key" }
+            },
+            {
+                text: ic("&#9830;","i-shield") + " Крепкий щит &#8212; устойчивость и способность 
+
+выдержать больше, чем кажется",
+                next: "t4_shield", save: { symbol: "shield" }
+            },
+            {
+                text: ic("&#9728;","i-lantern") + " Тёплый фонарь &#8212; умение нести свет другим 
+
+даже в трудные времена",
+                next: "t4_lantern", save: { symbol: "lantern" }
+            }
+        ]
+    },
+
+    "t4_compass": {
+        type: "transition",
+        emoji: icBig("&#9737;","i-compass"),
+        bg: "bg-bright",
+        reflectionClass: "warm",
+        text: "Компас &#8212; символ внутренней мудрости. "
+            + "Даже когда вокруг хаос, "
+            + "внутри есть стрелка, которая знает направление."
+            + "<br><br>"
+            + "Стоит вспомнить: сколько раз решения, "
+            + "казавшиеся рискованными, оказывались верными? "
+            + "Это не случайность. Это внутренний компас.",
+        pause: 5000,
+        next: "q5_horizon"
+    },
+
+    "t4_key": {
+        type: "transition",
+        emoji: icBig("&#9758;","i-key"),
+        bg: "bg-bright",
+        reflectionClass: "warm",
+        text: "Золотой ключ &#8212; символ находчивости. "
+            + "Там, где видится стена &#8212; находится дверь. "
+            + "Там, где дверь заперта &#8212; подбирается ключ."
+            + "<br><br>"
+            + "Эта способность работала раньше, работает сейчас "
+            + "и будет работать в будущем.",
+        pause: 5000,
+        next: "q5_horizon"
+    },
+
+    "t4_shield": {
+        type: "transition",
+        emoji: icBig("&#9830;","i-shield"),
+        bg: "bg-bright",
+        reflectionClass: "warm",
+        text: "Щит &#8212; символ стойкости. "
+            + "Стоит оглянуться: всё, что было пережито &#8212; "
+            + "не сломало, а закалило."
+            + "<br><br>"
+            + "Эта устойчивость &#8212; не жёсткость, "
+            + "а гибкая прочность. Как дерево, "
+            + "которое гнётся на ветру, но не ломается.",
+        pause: 5000,
+        next: "q5_horizon"
+    },
+
+    "t4_lantern": {
+        type: "transition",
+        emoji: icBig("&#9728;","i-lantern"),
+        bg: "bg-bright",
+        reflectionClass: "warm",
+        text: "Фонарь &#8212; символ внутреннего света. "
+            + "Есть люди, рядом с которыми другим "
+            + "становится теплее и спокойнее."
+            + "<br><br>"
+            + "Но чтобы фонарь продолжал светить, "
+            + "важно заботиться и о самом огне. "
+            + "Именно этим сейчас и стоит заняться.",
+        pause: 5000,
+        next: "q5_horizon"
+    },
+
+    // ===== ВОПРОС 5: адаптивный к стартовому состоянию =====
+
+    "q5_horizon": {
+        type: "question_dynamic",
+        step: 5,
+        label: "ГОРИЗОНТ",
+        bg: "bg-golden",
+        questionVariants: {
+            fog: "Туман рассеялся. Впереди &#8212; горизонт, "
+                + "и что-то наполняет предвкушением. "
+                + "Не тревожным ожиданием, "
+                + "а радостным предчувствием. Что там, впереди?",
+            clouds: "Облака разошлись. Впереди &#8212; открытый горизонт, "
+                + "и что-то наполняет предвкушением. "
+                + "Не тревожным ожиданием, "
+                + "а радостным предчувствием. Что там, впереди?",
+            partial: "Последние облака уходят. Горизонт полностью открыт, "
+                + "и что-то наполняет радостным предчувствием. "
+                + "Что там, впереди?",
+            clear: "Небо сияет &#8212; ещё ярче, чем в начале. "
+                + "Горизонт широко раскрыт, "
+                + "и что-то наполняет радостным предчувствием. "
+                + "Что там, впереди?"
+        },
+        answers: [
+            {
+                text: ic("&#9733;","i-star") + " Новое открытие &#8212; возможность узнать то, что 
+
+изменит взгляд на мир",
+                next: "t5_discovery", save: { horizon: "discovery" }
+            },
+            {
+                text: ic("&#9786;","i-smile") + " Встреча &#8212; пересечение с людьми, которые 
+
+поймут и вдохновят",
+                next: "t5_meeting", save: { horizon: "meeting" }
+            },
+            {
+                text: ic("&#9650;","i-arrow") + " Результат &#8212; момент, когда вложенный труд 
+
+принесёт видимые плоды",
+                next: "t5_achievement", save: { horizon: "achievement" }
+            },
+            {
+                text: ic("&#9752;","i-leaf") + " Гармония &#8212; период, когда всё просто 
+
+складывается идеально",
+                next: "t5_harmony", save: { horizon: "harmony" }
+            }
+        ]
+    },
+
+    // ===== ПЕРЕХОДЫ ПОСЛЕ ВОПРОСА 5 =====
+
+    "t5_discovery": {
+        type: "transition",
+        emoji: icBig("&#9733;","i-star"),
+        bg: "bg-golden",
+        reflectionClass: "bright",
+        text: "Любопытство и жажда нового &#8212; "
+            + "одна из самых чистых форм радости. "
+            + "В момент открытия мозг вырабатывает дофамин "
+            + "&#8212; гормон предвкушения."
+            + "<br><br>"
+            + "Прямо сейчас тоже происходит открытие &#8212; "
+            + "открытие внутренних ресурсов. "
+            + "И это уже меняет настроение.",
+        pause: 4500,
+        next: "q6_feeling"
+    },
+
+    "t5_meeting": {
+        type: "transition",
+        emoji: icBig("&#9829;","i-heart"),
+        bg: "bg-golden",
+        reflectionClass: "bright",
+        text: "Предвкушение встречи со своими людьми "
+            + "&#8212; одно из самых тёплых чувств. "
+            + "Войти туда, где рады видеть. "
+            + "Не за заслуги &#8212; просто так."
+            + "<br><br>"
+            + "Это чувство принятия &#8212; бесценно. "
+            + "И оно уже знакомо.",
+        pause: 4500,
+        next: "q6_feeling"
+    },
+
+    "t5_achievement": {
+        type: "transition",
+        emoji: icBig("&#9650;","i-arrow"),
+        bg: "bg-golden",
+        reflectionClass: "bright",
+        text: "Момент, когда усилия превращаются в результат "
+            + "&#8212; это подтверждение: "
+            + "время и энергия потрачены не зря."
+            + "<br><br>"
+            + "Стоит вспомнить свой последний такой момент "
+            + "и почувствовать его снова. Это &#8212; доказательство "
+            + "способности создавать будущее.",
+        pause: 4500,
+        next: "q6_feeling"
+    },
+
+    "t5_harmony": {
+        type: "transition",
+        emoji: icBig("&#9752;","i-leaf"),
+        bg: "bg-golden",
+        reflectionClass: "bright",
+        text: "Гармония &#8212; когда ничего не нужно добавлять "
+            + "и ничего убирать. Всё на своих местах. "
+            + "Это не застой &#8212; "
+            + "это высшая форма равновесия."
+            + "<br><br>"
+            + "Прямо в этот момент "
+            + "это состояние ближе, "
+            + "чем было несколько минут назад.",
+        pause: 4500,
+        next: "q6_feeling"
+    },
+
+    // ===== ВОПРОС 6 =====
+
+    "q6_feeling": {
+        type: "question",
+        step: 6,
+        label: "ВНУТРЕННИЙ СВЕТ",
+        bg: "bg-sunset",
+        question: "Почти финал. Стоит обратить внимание "
+                + "на внутреннее состояние &#8212; именно сейчас, "
+                + "в эту секунду. Не то, что было в начале, "
+                + "а то, что есть прямо сейчас. "
+                + "Какое первое ощущение приходит?",
+        answers: [
+            {
+                text: ic("&#9790;","i-moon") + " Лёгкость &#8212; словно что-то тяжёлое мягко 
+
+соскользнуло с плеч",
+                next: "t6_light", save: { feeling: "lightness" }
+            },
+            {
+                text: ic("&#9728;","i-sun") + " Ясность &#8212; в голове стало светлее и просторнее",
+                next: "t6_clarity", save: { feeling: "clarity" }
+            },
+            {
+                text: ic("&#9786;","i-smile") + " Тёплая улыбка &#8212; внутренняя, может даже 
+
+незаметная снаружи",
+                next: "t6_smile", save: { feeling: "smile" }
+            },
+            {
+                text: ic("&#9875;","i-anchor") + " Устойчивость &#8212; спокойная уверенность, что 
+
+всё будет хорошо",
+                next: "t6_steady", save: { feeling: "steady" }
+            }
+        ]
+    },
+
+    "t6_light": {
+        type: "transition",
+        emoji: icBig("&#9790;","i-moon"),
+        bg: "bg-sunset",
+        reflectionClass: "golden",
+        text: "Лёгкость. Что-то отпускает. "
+            + "Это не бегство от проблем &#8212; "
+            + "это разрешение не нести лишнее. "
+            + "Проблемы никуда не денутся, "
+            + "но подход к ним становится легче."
+            + "<br><br>"
+            + "Последний шаг &#8212; и это состояние закрепится.",
+        pause: 4000,
+        next: "q7_final"
+    },
+
+    "t6_clarity": {
+        type: "transition",
+        emoji: icBig("&#9830;","i-diamond"),
+        bg: "bg-sunset",
+        reflectionClass: "golden",
+        text: "Ясность. Когда внутри проясняется &#8212; "
+            + "мир становится проще. Не потому что проблем нет, "
+            + "а потому что они видны такими, какие есть: "
+            + "решаемыми."
+            + "<br><br>"
+            + "Эта ясность &#8212; ценный ресурс. Пора сохранить.",
+        pause: 4000,
+        next: "q7_final"
+    },
+
+    "t6_smile": {
+        type: "transition",
+        emoji: icBig("&#9728;","i-sun"),
+        bg: "bg-sunset",
+        reflectionClass: "golden",
+        text: "Внутренняя улыбка &#8212; пожалуй, "
+            + "самый верный знак настоящей радости. "
+            + "Не показной, не для других."
+            + "<br><br>"
+            + "Эта улыбка &#8212; лучшее подтверждение, "
+            + "что путешествие уже дало результат. "
+            + "Финальный шаг.",
+        pause: 4000,
+        next: "q7_final"
+    },
+
+    "t6_steady": {
+        type: "transition",
+        emoji: icBig("&#9875;","i-anchor"),
+        bg: "bg-sunset",
+        reflectionClass: "golden",
+        text: "Спокойная уверенность &#8212; "
+            + "самое устойчивое из позитивных состояний. "
+            + "Не восторг, который быстро угасает, "
+            + "а глубокое ощущение: всё на месте. Всё в порядке."
+            + "<br><br>"
+            + "Осталось это закрепить.",
+        pause: 4000,
+        next: "q7_final"
+    },
+
+    // ===== ВОПРОС 7 =====
+
+    "q7_final": {
+        type: "question",
+        step: 7,
+        label: "ЗАКРЕПЛЕНИЕ",
+        bg: "bg-final",
+        question: "Последний вопрос &#8212; самый важный. "
+                + "Путь к ясному небу пройден "
+                + "за несколько минут. Своими ответами. Своим вниманием. "
+                + "Как хочется завершить этот момент?",
+        answers: [
+            {
+                text: ic("&#9737;","i-compass") + " Запомнить &#8212; сохранить это ощущение как 
+
+точку возврата на случай пасмурных дней",
+                next: "breathe_anchor", save: { strength: "anchor" }
+            },
+            {
+                text: ic("&#9786;","i-smile") + " Улыбнуться &#8212; просто так, для себя, прямо 
+
+сейчас",
+                next: "breathe_smile", save: { strength: "smile" }
+            },
+            {
+                text: ic("&#9728;","i-sun") + " Выдохнуть &#8212; отпустить всё лишнее одним глубоким 
+
+выдохом",
+                next: "breathe_breath", save: { strength: "breath" }
+            },
+            {
+                text: ic("&#9829;","i-heart") + " Поделиться &#8212; мысленно послать тепло тому, кто 
+
+сейчас в этом нуждается",
+                next: "breathe_share", save: { strength: "share" }
+            }
+        ]
+    },
+
+    // ===== ДЫХАНИЕ =====
+
+    "breathe_anchor": {
+        type: "breathe",
+        bg: "bg-final",
+        text: "Один медленный глубокий вдох... "
+            + "и медленный выдох. "
+            + "Это ощущение фиксируется внутри.",
+        pause: 8000,
+        next: "result_anchor"
+    },
+
+    "breathe_smile": {
+        type: "breathe",
+        bg: "bg-final",
+        text: "Улыбка для себя. "
+            + "Мышцы лица расслабляются. "
+            + "Внутри становится теплее.",
+        pause: 8000,
+        next: "result_smile"
+    },
+
+    "breathe_breath": {
+        type: "breathe",
+        bg: "bg-final",
+        text: "Один глубокий выдох. "
+            + "С ним уходит "
+            + "всё лишнее.",
+        pause: 8000,
+        next: "result_breath"
+    },
+
+    "breathe_share": {
+        type: "breathe",
+        bg: "bg-final",
+        text: "Перед глазами &#8212; тот, "
+            + "кому хочется послать тепло. "
+            + "Мысленный луч света летит.",
+        pause: 8000,
+        next: "result_share"
+    },
+
+    // ===== РЕЗУЛЬТАТЫ =====
+
+    "result_anchor": {
+        type: "result",
+        bg: "bg-final",
+        emoji: ic("&#9737;","i-compass") + " " + ic("&#10024;","i-star"),
+        title: "Внутренний компас настроен",
+        paragraphs: [
+            "Только что завершилось маленькое, "
+            + "но настоящее путешествие &#8212; к ясному небу. "
+            + "Не случайно, а осознанно, шаг за шагом.",
+
+            "Выбор &#8212; сохранить это состояние как ресурс &#8212; "
+            + "мудрый выбор. Настроение &#8212; "
+            + "это не то, что просто случается. "
+            + "Это то, что можно создавать.",
+
+            "Только что это было доказано на практике."
+        ],
+        tip: "Когда накроет пасмурность &#8212; "
+            + "достаточно закрыть глаза на 30 секунд. "
+            + "Найти тепло в теле. Вспомнить своё место силы. "
+            + "Взять в руки компас. "
+            + "Посмотреть на горизонт. Компас всегда рядом."
+    },
+
+    "result_smile": {
+        type: "result",
+        bg: "bg-final",
+        emoji: ic("&#9786;","i-smile") + " " + ic("&#9728;","i-sun"),
+        title: "Улыбка, которая идёт изнутри",
+        paragraphs: [
+            "Путь к солнцу завершён "
+            + "самым простым и самым мощным действием &#8212; улыбкой.",
+
+            "Нейробиология подтверждает: "
+            + "даже намеренная улыбка запускает каскад реакций, "
+            + "которые реально улучшают настроение. "
+            + "А эта улыбка &#8212; настоящая, "
+            + "за ней стоит реальный внутренний путь.",
+
+            "Умение находить повод для радости &#8212; "
+            + "это суперсила."
+        ],
+        tip: "Хорошая практика &#8212; начинать каждое утро с одной мысли: "
+            + "&#171;Что сегодня вызовет улыбку?&#187; "
+            + "Это занимает 10 секунд, "
+            + "а меняет весь день."
+    },
+
+    "result_breath": {
+        type: "result",
+        bg: "bg-final",
+        emoji: ic("&#9728;","i-sun") + " " + ic("&#9790;","i-moon"),
+        title: "Пространство внутренней свободы",
+        paragraphs: [
+            "Отпустить &#8212; "
+            + "один из самых сильных навыков.",
+
+            "Часто приходится нести то, что не принадлежит: "
+            + "чужие тревоги, вчерашние переживания, "
+            + "завтрашние страхи. "
+            + "Один глубокий выдох &#8212; "
+            + "и пространство внутри очищается.",
+
+            "Это пространство только что было создано."
+        ],
+        tip: "В любой сложной ситуации &#8212; "
+            + "один медленный выдох. "
+            + "Не вдох, а именно выдох. "
+            + "Тело само сделает вдох, "
+            + "а с ним придёт ясность."
+    },
+
+    "result_share": {
+        type: "result",
+        bg: "bg-final",
+        emoji: ic("&#9829;","i-heart") + " " + ic("&#9733;","i-star"),
+        title: "Тепло, которое множится",
+        paragraphs: [
+            "Когда становится хорошо "
+            + "и первый импульс &#8212; поделиться &#8212; "
+            + "это признак настоящей внутренней наполненности.",
+
+            "Это не просто подзарядка. "
+            + "Это превращение в источник. "
+            + "Редкое качество.",
+
+            "Тепло, которое отдаётся, "
+            + "не уменьшается &#8212; оно множится."
+        ],
+        tip: "Стоит сегодня написать или сказать одному человеку "
+            + "что-то хорошее. Без повода. Просто так. "
+            + "Одна фраза запускает цепную реакцию добра."
+    }
+};
+
+// ========================================
+// РЕНДЕРИНГ
+// ========================================
+
+function setBackground(bgClass) {
+    document.body.className = bgClass;
+}
+
+function renderJourneyBar(currentStep) {
+    var html = '<div class="journey-bar">';
+    for (var i = 1; i <= state.totalSteps; i++) {
+        var dotClass = 'journey-dot';
+        if (i < currentStep) dotClass += ' completed';
+        if (i === currentStep) dotClass += ' active';
+        html += '<div class="' + dotClass + '"></div>';
+        if (i < state.totalSteps) {
+            var lineClass = 'journey-line';
+            if (i < currentStep) lineClass += ' completed';
+            html += '<div class="' + lineClass + '"></div>';
+        }
+    }
+    html += '</div>';
+    return html;
+}
+
+function showNode(id) {
+    var node = testFlow[id];
+    if (!node) return;
+    if (node.bg) setBackground(node.bg);
+
+    var card = document.getElementById('card');
+    card.style.animation = 'none';
+    void card.offsetHeight;
+    card.style.animation = 'cardAppear 0.8s ease forwards';
+
+    switch (node.type) {
+        case 'intro': renderIntro(node); break;
+        case 'question': renderQuestion(id, node); break;
+        case 'question_dynamic': renderQuestionDynamic(id, node); break;
+        case 'transition': renderTransition(node); break;
+        case 'breathe': renderBreathe(node); break;
+        case 'result': renderResult(node); break;
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function renderIntro(node) {
+    document.getElementById('content').innerHTML =
+        node.emoji
+        + '<div class="intro-title">' + node.title + '</div>'
+        + '<div style="text-align:center; color:#999; '
+        + 'font-size:0.85em; margin-bottom:16px;">'
+        + node.subtitle + '</div>'
+        + '<div class="intro-text">' + node.text + '</div>'
+        + '<button class="start-btn" onclick="showNode(\'' + node.next + '\')">'
+        + node.buttonText + '</button>';
+}
+
+function renderQuestion(id, node) {
+    var html = renderJourneyBar(node.step);
+    html += '<div class="step-label">' + node.label + '</div>';
+    html += '<div class="question-title">' + node.question + '</div>';
+    for (var i = 0; i < node.answers.length; i++) {
+        html += '<button class="answer-btn" '
+            + 'onclick="selectAnswer(\'' + id + '\', ' + i + ')">'
+            + node.answers[i].text + '</button>';
+    }
+    document.getElementById('content').innerHTML = html;
+}
+
+function renderQuestionDynamic(id, node) {
+    var questionText = node.questionVariants[state.moodStart] || node.questionVariants["clouds"];
+    var html = renderJourneyBar(node.step);
+    html += '<div class="step-label">' + node.label + '</div>';
+    html += '<div class="question-title">' + questionText + '</div>';
+    for (var i = 0; i < node.answers.length; i++) {
+        html += '<button class="answer-btn" '
+            + 'onclick="selectAnswer(\'' + id + '\', ' + i + ')">'
+            + node.answers[i].text + '</button>';
+    }
+    document.getElementById('content').innerHTML = html;
+}
+
+function renderTransition(node) {
+    var reflClass = node.reflectionClass || '';
+    document.getElementById('content').innerHTML =
+        node.emoji
+        + '<div class="reflection ' + reflClass + '">'
+        + node.text + '</div>'
+        + '<div class="read-slow">&#8226; &#8226; &#8226;</div>'
+        + '<div class="continue-area">'
+        + '<div id="continue-placeholder"></div>'
+        + '</div>';
+
+    setTimeout(function() {
+        var p = document.getElementById('continue-placeholder');
+        if (p) {
+            p.innerHTML =
+                '<button class="continue-btn" '
+                + 'onclick="showNode(\'' + node.next + '\')">'
+                + 'Продолжить &#10148;</button>';
+        }
+    }, node.pause || 3000);
+}
+
+function renderBreathe(node) {
+    document.getElementById('content').innerHTML =
+        '<div style="text-align:center; padding: 15px 0;">'
+        + '<div style="color:#999; font-size:0.8em; '
+        + 'text-transform:uppercase; letter-spacing:2px; '
+        + 'margin-bottom:15px;">Момент тишины</div>'
+        + '<div class="breathe-circle">&#8226; &#8226; &#8226;</div>'
+        + '<div style="color:#555; font-size:1.05em; '
+        + 'line-height:1.7; margin-top:15px; font-style:italic;">'
+        + node.text + '</div>'
+        + '</div>'
+        + '<div class="continue-area">'
+        + '<div id="continue-placeholder"></div>'
+        + '</div>';
+
+    setTimeout(function() {
+        var p = document.getElementById('continue-placeholder');
+        if (p) {
+            p.innerHTML =
+                '<button class="continue-btn" '
+                + 'onclick="showNode(\'' + node.next + '\')">'
+                + 'Увидеть результат ' + ic("&#10024;","i-star") + '</button>';
+        }
+    }, node.pause || 6000);
+}
+
+function renderResult(node) {
+    var pHtml = '';
+    for (var i = 0; i < node.paragraphs.length; i++) {
+        var d = 0.8 + i * 0.4;
+        pHtml += '<div class="result-text" style="animation-delay:'
+            + d + 's;">' + node.paragraphs[i] + '</div>';
+    }
+
+    var journey = buildJourneySummary();
+
+    document.getElementById('content').innerHTML =
+        '<div class="result-emoji">' + node.emoji + '</div>'
+        + '<div class="result-title">' + node.title + '</div>'
+        + pHtml
+        + '<div class="result-tip">'
+        + '<div class="result-tip-title">'
+        + ic("&#9733;","i-star") + ' Практический совет</div>'
+        + node.tip + '</div>'
+        + '<div class="journey-summary">'
+        + '<div class="journey-summary-title">'
+        + ic("&#9776;","i-water") + ' Пройденный путь</div>'
+        + journey + '</div>'
+        + '<button class="restart-btn" onclick="restart()">'
+        + '&#8634; Пройти ещё раз</button>';
+}
+
+// ========================================
+// ПЕРСОНАЛИЗАЦИЯ
+// ========================================
+
+function buildJourneySummary() {
+    var parts = [];
+
+    var moods = {
+        fog: "Начало &#8212; густой туман: неопределённость",
+        clouds: "Начало &#8212; серые облака: спокойствие с фоновой тревогой",
+        partial: "Начало &#8212; облака с просветами: нормальное настроение",
+        clear: "Начало &#8212; почти ясное небо: хороший настрой"
+    };
+    if (state.moodStart && moods[state.moodStart]) parts.push(moods[state.moodStart]);
+
+    var resources = {
+        body: "Опора &#8212; телесный комфорт и тепло",
+        senses: "Опора &#8212; тонкое восприятие и внимание к красоте",
+        people: "Опора &#8212; ценность связи с людьми",
+        move: "Опора &#8212; энергия движения и перемен"
+    };
+    if (state.resource && resources[state.resource]) parts.push(resources[state.resource]);
+
+    var places = {
+        nature: "Место силы &#8212; природа и простор",
+        home: "Место силы &#8212; уют и тепло дома",
+        city: "Место силы &#8212; живой город",
+        memory: "Место силы &#8212; тёплое воспоминание"
+    };
+    if (state.place && places[state.place]) parts.push(places[state.place]);
+
+    var symbols = {
+        compass: "Дар &#8212; " + ic("&#9737;","i-compass") + " компас, умение находить путь",
+        key: "Дар &#8212; " + ic("&#9758;","i-key") + " золотой ключ, находчивость",
+        shield: "Дар &#8212; " + ic("&#9830;","i-shield") + " щит, стойкость",
+        lantern: "Дар &#8212; " + ic("&#9728;","i-lantern") + " фонарь, способность нести свет"
+    };
+    if (state.symbol && symbols[state.symbol]) parts.push(symbols[state.symbol]);
+
+    var horizons = {
+        discovery: "Горизонт &#8212; новые открытия",
+        meeting: "Горизонт &#8212; встречи с единомышленниками",
+        achievement: "Горизонт &#8212; результаты вложенного труда",
+        harmony: "Горизонт &#8212; гармония и равновесие"
+    };
+    if (state.horizon && horizons[state.horizon]) parts.push(horizons[state.horizon]);
+
+    return parts.join("<br>");
+}
+
+// ========================================
+// УПРАВЛЕНИЕ
+// ========================================
+
+function selectAnswer(questionId, answerIndex) {
+    var node = testFlow[questionId];
+    var answer = node.answers[answerIndex];
+    state.path.push(questionId);
+    if (answer.save) {
+        for (var key in answer.save) {
+            state[key] = answer.save[key];
+        }
+    }
+    showNode(answer.next);
+}
+
+function restart() {
+    state = {
+        step: 0, totalSteps: 7,
+        path: [], moodStart: '', resource: '',
+        place: '', symbol: '', horizon: '',
+        feeling: '', strength: ''
+    };
+    setBackground('bg-start');
+    showNode('intro');
+}
+
+showNode('intro');
+
+</script>
+</body>
+</html>
