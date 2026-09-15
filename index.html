@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Путь — книга о себе</title>
+    <link rel="stylesheet" href="css/book.css">
+    <link rel="stylesheet" href="css/ui.css">
+</head>
+<body>
+
+<div id="app">
+
+    <!-- Экран загрузки -->
+    <div id="loading-screen">
+        <div class="loading-content">
+            <div class="loading-symbol">✦</div>
+            <div class="loading-text">Книга открывается...</div>
+        </div>
+    </div>
+
+    <!-- Сцена: занимает весь экран, центрирует книгу -->
+    <div id="book-scene">
+
+        <!-- Тень под книгой -->
+        <div id="book-shadow"></div>
+
+        <!-- Книга -->
+        <div id="book">
+
+            <!-- Левая страница -->
+            <div id="page-left" class="page page-left">
+                <div class="page-inner">
+                    <div class="page-content" id="left-content"></div>
+                    <div class="page-number" id="left-page-num"></div>
+                </div>
+            </div>
+
+            <!-- Корешок -->
+            <div id="book-spine"></div>
+
+            <!-- Правая страница -->
+            <div id="page-right" class="page page-right">
+                <div class="page-inner">
+                    <div class="page-content" id="right-content"></div>
+                    <div class="page-number" id="right-page-num"></div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /book -->
+
+        <!-- Кнопки листания (вне книги, позиционированы относительно сцены) -->
+        <button id="btn-prev" class="nav-btn nav-btn-left"
+                onclick="BookEngine.prev()">‹</button>
+        <button id="btn-next" class="nav-btn nav-btn-right"
+                onclick="BookEngine.next()">›</button>
+
+    </div>
+    <!-- /book-scene -->
+
+    <!-- Верхняя панель -->
+    <div id="top-bar">
+        <div id="chapter-title"></div>
+        <div id="progress-dots"></div>
+    </div>
+
+</div>
+<!-- /app -->
+
+<script src="js/profile.js"></script>
+<script src="js/story.js"></script>
+<script src="js/choices.js"></script>
+<script src="js/render.js"></script>
+<script src="js/book.js"></script>
+
+</body>
+</html>
