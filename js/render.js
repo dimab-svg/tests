@@ -1,19 +1,21 @@
-﻿/**
+/**
  * render.js
  * Отрисовка разворотов (левая и правая страницы)
  */
 
 const Renderer = (() => {
 
-    function renderSpread(spreadIndex) {
+    /**
+     * Отрисовка разворота.
+     * opts.meta === false — не трогать заголовок главы и точки прогресса
+     * (используется во время перелистывания: мета обновляется в конце анимации).
+     */
+    function renderSpread(spreadIndex, opts) {
+        opts = opts || {};
         const spread = Story.getSpread(spreadIndex);
         if (!spread) return;
 
-        // Обновляем заголовок главы
-        document.getElementById('chapter-title').textContent = spread.chapter || '';
-
-        // Обновляем точки прогресса
-        updateProgressDots(spreadIndex);
+        if (opts.meta !== false) renderMeta(spreadIndex);
 
         // Нумерация страниц
         const leftPageNum  = spreadIndex * 2 - 1;
@@ -28,6 +30,14 @@ const Renderer = (() => {
 
         // Правая страница
         renderRightPage(spread.right);
+    }
+
+    // Заголовок главы + точки прогресса (обновляется по окончании листания)
+    function renderMeta(spreadIndex) {
+        const spread = Story.getSpread(spreadIndex);
+        document.getElementById('chapter-title').textContent =
+            (spread && spread.chapter) || '';
+        updateProgressDots(spreadIndex);
     }
 
     function renderLeftPage(data) {
@@ -105,7 +115,7 @@ const Renderer = (() => {
         }
     }
 
-    return { renderSpread };
+    return { renderSpread, renderMeta };
 
 })();
 
