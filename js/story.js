@@ -1,4 +1,4 @@
-﻿/**
+/**
  * story.js
  * Полный текст истории — страницы, вопросы, варианты ответов
  *
@@ -22,30 +22,10 @@ const Story = (() => {
             id: 'cover',
             chapter: '',
             left: {
+                // внутренняя сторона обложки — пустая белая страница
+                // (сюда можно позже поместить эпиграф, дарственную надпись и т.п.)
                 type: 'cover-left',
-                content: `
-                    <div style="height:100%; display:flex; flex-direction:column;
-                                justify-content:center; align-items:center;
-                                background: linear-gradient(160deg,#2a1f0a,#1a1208);
-                                margin: -48px -44px; padding: 48px 44px;">
-                        <div style="color:#c8a84b; font-size:0.6em;
-                                    letter-spacing:0.5em; opacity:0.5; margin-bottom:24px;">
-                            ИСТОРИЯ
-                        </div>
-                        <div style="color:#c8a84b; font-size:2.2em;
-                                    letter-spacing:0.3em; margin-bottom:8px;">
-                            ПУТЬ
-                        </div>
-                        <div style="color:#c8a84b; font-size:0.65em;
-                                    letter-spacing:0.25em; opacity:0.55;">
-                            книга о себе
-                        </div>
-                        <div style="color:#c8a84b; font-size:1.2em;
-                                    letter-spacing:0.8em; opacity:0.25; margin-top:32px;">
-                            ✦ ✦ ✦
-                        </div>
-                    </div>
-                `
+                content: ''
             },
             right: {
                 type: 'cover-right',
